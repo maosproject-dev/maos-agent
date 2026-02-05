@@ -31,23 +31,9 @@ class TaskContext:
         duration = time.time() - self.start_time
         status = "error" if exc_type else "success"
         
-        # 1. Record Success/Fail Counter
         self.metrics.record_task_success(self.name, status)
-        
-        # 2. Record Duration
-        # We manually observe the histogram since we managed the time
-        from .metrics import TASK_DURATION
-        TASK_DURATION.labels(
-            task_type=self.name, 
-            **self.metrics.labels
-        ).observe(duration)
-
-        # 3. Record Steps (The "Loop of Death" check)
-        from .metrics import STEPS_PER_GOAL
-        STEPS_PER_GOAL.labels(
-            task_type=self.name, 
-            **self.metrics.labels
-        ).observe(self.steps)
+        self.metrics.record_steps(self.name, self.steps)
+        self.metrics.record_duration(self.name, duration)
 
         if exc_type:
             self.logger.error(f"Task '{self.name}' failed: {exc_val}")

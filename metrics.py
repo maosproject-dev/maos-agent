@@ -45,9 +45,9 @@ class MetricsManager:
         # Start the Prometheus exporter server automatically
         try:
             start_http_server(port)
-            print(f"[Maos] Metrics server started on port {port}")
+            print(f"[Maosproject] Metrics server started on port {port}")
         except Exception as e:
-            print(f"[Maos] Warning: Could not start metrics server: {e}")
+            print(f"[Maosproject] Warning: Could not start metrics server: {e}")
 
     def record_tool(self, tool_name: str, status: str = "success"):
         TOOL_CALLS.labels(tool_name=tool_name, status=status, **self.labels).inc()
@@ -58,6 +58,8 @@ class MetricsManager:
     def record_task_success(self, task_type: str, status: str):
         TASK_SUCCESS.labels(task_type=task_type, status=status, **self.labels).inc()
 
-    def task_timer(self, task_type: str):
-        """Returns a context manager to time a task."""
-        return TASK_DURATION.labels(task_type=task_type, **self.labels).time()
+    def record_duration(self, task_type: str, seconds: float):
+        TASK_DURATION.labels(task_type=task_type, **self.labels).observe(seconds)
+
+    def record_steps(self, task_type: str, count: int):
+        STEPS_PER_GOAL.labels(task_type=task_type, **self.labels).observe(count)
