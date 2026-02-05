@@ -1,13 +1,3 @@
-**CTO here.**
-
-Here is the `README.md`.
-
-It is written to be "Marketing-Engineering" aligned. It doesn't just say *how* to use it; it explains *why* a developer needs it (to stop their agents from dying silently on Spot instances).
-
-I’ve added badges, a clear "Quick Start," and a section linking the metrics directly to the Grafana dashboard we just built.
-
----
-
 # Maos Agent SDK
 
 The official Python SDK for building resilient, observable AI Agents on the **Maos Platform**.
