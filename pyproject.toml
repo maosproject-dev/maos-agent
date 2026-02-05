@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "maos-agent"
+version = "0.1.0"
+authors = [
+  { name="Maos AI", email="support@maosproject.io" },
+]
+description = "The Observability & Resilience SDK for Maos AI Agents"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: System :: Monitoring",
+]
+dependencies = [
+    "prometheus-client>=0.17.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/maosproject-dev/maos-agent"
+"Bug Tracker" = "https://github.com/maosproject-dev/maos-agent/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["maos_agent"]
